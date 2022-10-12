@@ -1,22 +1,29 @@
 from django.db.models import Sum
 from django.shortcuts import get_object_or_404
-from django_filters.rest_framework import DjangoFilterBackend
+
 from rest_framework import filters, permissions, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
+from django_filters.rest_framework import DjangoFilterBackend
 from recipes.models import (
-    Favorite, Ingredient,
-    IngredientAmount, Recipe,
-    ShoppingCart, Tag
+    Favorite,
+    Ingredient,
+    IngredientAmount,
+    Recipe,
+    ShoppingCart,
+    Tag
 )
 
 from ..filters import RecipeFilter
 from ..permissions import AuthorOrReadOnly
 from ..serializers.recipes import (
-    FavoriteSerializer, IngredientSerializer,
-    RecipeGETSerializer, RecipeSerializer,
-    RecipeShortSerializer, ShoppingCartSerializer,
+    FavoriteSerializer,
+    IngredientSerializer,
+    RecipeGETSerializer,
+    RecipeSerializer,
+    RecipeShortSerializer,
+    ShoppingCartSerializer,
     TagSerializer
 )
 from ..utils import create_shopping_list
@@ -59,10 +66,9 @@ class RecipeViewSet(viewsets.ModelViewSet):
         url_path='favorite',
         url_name='favorite',
         permission_classes=(permissions.IsAuthenticated,)
-    )  # не работает, если указать id -  почему?
+    )
     def get_favorite(self, request, pk):
         """Позволяет текущему пользователю добавлять рецепты в избранное."""
-        # не работает, если указать id -  почему?
         recipe = get_object_or_404(Recipe, pk=pk)
         if request.method == 'POST':
             serializer = FavoriteSerializer(
@@ -86,11 +92,10 @@ class RecipeViewSet(viewsets.ModelViewSet):
         url_path='shopping_cart',
         url_name='shopping_cart',
         permission_classes=(permissions.IsAuthenticated,)
-    )  # не работает, если указать id -  почему?
+    )
     def get_shopping_cart(self, request, pk):
         """Позволяет текущему пользователю добавлять рецепты
         в список покупок."""
-        # не работает, если указать id -  почему?
         recipe = get_object_or_404(Recipe, pk=pk)
         if request.method == 'POST':
             serializer = ShoppingCartSerializer(

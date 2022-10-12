@@ -1,11 +1,14 @@
-from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
+from drf_extra_fields.fields import Base64ImageField
 from recipes.models import (
-    Favorite, Ingredient,
-    IngredientAmount, Recipe,
-    ShoppingCart, Tag
+    Favorite,
+    Ingredient,
+    IngredientAmount,
+    Recipe,
+    ShoppingCart,
+    Tag
 )
 
 from .users import CustomUserSerializer
@@ -134,9 +137,21 @@ class RecipeSerializer(serializers.ModelSerializer):
         for ingredient in ingredients:
             if int(ingredient.get('amount')) < 1:
                 raise serializers.ValidationError(
-                    'Необходимое количество ингредиента не может быть меньше 1'
+                    'Количество ингредиента не может быть меньше 1'
+                )
+            if int(ingredient.get('amount')) > 100:
+                raise serializers.ValidationError(
+                    'Количество ингредиента не может быть больше 100'
                 )
         return ingredients
+
+    def validate_tags(self, tags):
+        """Проверяем, что рецепт содержит уникальные теги."""
+        if len(tags) != len(set(tags)):
+            raise serializers.ValidationError(
+                'Теги рецепта должны быть уникальными'
+            )
+        return tags
 
     @staticmethod
     def add_ingredients(ingredients_data, recipe):
@@ -172,8 +187,7 @@ class RecipeSerializer(serializers.ModelSerializer):
         tags_data = validated_data.get('tags')
         instance.tags.set(tags_data)
         ingredients_data = validated_data.get('ingredients')
-        # Нужно ли такое удаление?
-        # IngredientAmount.objects.filter(recipe=recipe).delete()
+        IngredientAmount.objects.filter(recipe=recipe).delete()
         self.add_ingredients(ingredients_data, recipe)
         instance.save()
         return instance

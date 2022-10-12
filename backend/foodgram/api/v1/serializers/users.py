@@ -1,7 +1,7 @@
-from djoser.serializers import UserCreateSerializer, UserSerializer
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
+from djoser.serializers import UserCreateSerializer, UserSerializer
 from foodgram.settings import RECIPES_LIMIT
 from recipes.models import Recipe
 from users.models import Subscription, User
@@ -94,8 +94,6 @@ class SubscriptionSerializer(serializers.ModelSerializer):
         return data
 
 
-# выдает ошибку при попытке импортировать
-# аналогичный сериализатор из сериализаторов recipes, почему?
 class SubscriptionRecipeShortSerializer(serializers.ModelSerializer):
     """Сериализатор для отображения рецептов в подписке."""
 

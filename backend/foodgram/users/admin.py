@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from foodgram.settings import LIST_PER_PAGE
 
 from .models import Subscription, User

@@ -1,10 +1,11 @@
 from django.shortcuts import get_object_or_404
-from djoser.views import UserViewSet
+
 from rest_framework import permissions, status
 from rest_framework.decorators import action
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 
+from djoser.views import UserViewSet
 from users.models import Subscription, User
 
 from ..permissions import AnonimOrAuthenticatedReadOnly
@@ -51,7 +52,7 @@ class CustomUserViewSet(UserViewSet):
         url_path='subscribe',
         url_name='subscribe',
         permission_classes=(permissions.IsAuthenticated,)
-    )  # здесь нужно именно id, pk не работает, почему?
+    )
     def get_subscribe(self, request, id):
         """Позволяет текущему пользователю подписываться/отписываться от
         от автора контента, чей профиль он просматривает."""
@@ -68,10 +69,10 @@ class CustomUserViewSet(UserViewSet):
             return Response(
                 author_serializer.data, status=status.HTTP_201_CREATED
             )
-        subcription = get_object_or_404(
+        subscription = get_object_or_404(
             Subscription, subscriber=request.user, author=author
         )
-        subcription.delete()
+        subscription.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     @action(
