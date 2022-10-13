@@ -1,18 +1,17 @@
 from django.db.models import Sum
 from django.shortcuts import get_object_or_404
-
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters, permissions, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from django_filters.rest_framework import DjangoFilterBackend
 from recipes.models import (
     Favorite,
     Ingredient,
     IngredientAmount,
     Recipe,
     ShoppingCart,
-    Tag
+    Tag,
 )
 
 from ..filters import RecipeFilter
@@ -24,7 +23,7 @@ from ..serializers.recipes import (
     RecipeSerializer,
     RecipeShortSerializer,
     ShoppingCartSerializer,
-    TagSerializer
+    TagSerializer,
 )
 from ..utils import create_shopping_list
 
