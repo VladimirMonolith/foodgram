@@ -70,7 +70,7 @@ jobs:
           sudo docker-compose rm backend
           sudo rm .env
           touch .env
-          echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
+          echo KEY=${{ secrets.KEY }} >> .env
           echo POSTGRES_ENGINE=${{ secrets.POSTGRES_ENGINE }} >> .env
           echo POSTGRES_NAME=${{ secrets.POSTGRES_NAME }} >> .env
           echo POSTGRES_USER=${{ secrets.POSTGRES_USER }} >> .env
