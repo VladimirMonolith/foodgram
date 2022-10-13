@@ -11,7 +11,7 @@ from ..permissions import AnonimOrAuthenticatedReadOnly
 from ..serializers.users import (
     CustomUserSerializer,
     SubscriptionSerializer,
-    SubscriptionShowSerializer,
+    SubscriptionShowSerializer
 )
 
 

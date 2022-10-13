@@ -11,7 +11,7 @@ from recipes.models import (
     IngredientAmount,
     Recipe,
     ShoppingCart,
-    Tag,
+    Tag
 )
 
 from ..filters import RecipeFilter
@@ -23,7 +23,7 @@ from ..serializers.recipes import (
     RecipeSerializer,
     RecipeShortSerializer,
     ShoppingCartSerializer,
-    TagSerializer,
+    TagSerializer
 )
 from ..utils import create_shopping_list
 

@@ -8,7 +8,7 @@ from recipes.models import (
     IngredientAmount,
     Recipe,
     ShoppingCart,
-    Tag,
+    Tag
 )
 
 from .users import CustomUserSerializer
