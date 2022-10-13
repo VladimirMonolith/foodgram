@@ -44,6 +44,14 @@ class IngredientAdmin(admin.ModelAdmin):
     search_fields = ('name',)
 
 
+class IngredientAmountInline(admin.TabularInline):
+    """Класс, позволяющий настроивать ингредиенты в рецептах."""
+
+    model = IngredientAmount
+    min_num = 1
+    extra = 1
+
+
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
     """Класс настройки раздела рецептов."""
