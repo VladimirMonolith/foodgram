@@ -6,7 +6,7 @@ from django.core.validators import (
 from django.db import models
 
 from colorfield.fields import ColorField
-from backend.settings import LENGTH_TEXT
+from foodgram.settings import LENGTH_TEXT
 from users.models import User
 
 
