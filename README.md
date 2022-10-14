@@ -101,6 +101,8 @@ TELEGRAM_TOKEN=<токен вашего бота>
 ``` sudo docker-compose exec web python manage.py migrate ```
 - Создайте суперпользователя:  
 ``` sudo docker-compose exec web python manage.py createsuperuser ```
+
+``` sudo docker-compose exec backend python manage.py load_ingredients_data ```
 - Загрузите тестовые данные:  
 ``` sudo docker-compose exec web python manage.py loaddata fixtures.json ```
 

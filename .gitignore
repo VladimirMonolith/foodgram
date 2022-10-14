@@ -1,6 +1,6 @@
 .vscode/
-static/
-media/
+# static/
+# media/
 
 
 # Byte-compiled / optimized / DLL files
