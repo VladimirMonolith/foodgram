@@ -45,11 +45,10 @@ class IngredientAdmin(admin.ModelAdmin):
 
 
 class IngredientAmountInline(admin.TabularInline):
-    """Класс, позволяющий настроивать ингредиенты в рецептах."""
+    """Класс, позволяющий добавлять ингредиенты в рецепты."""
 
     model = IngredientAmount
     min_num = 1
-    extra = 1
 
 
 @admin.register(Recipe)
@@ -68,6 +67,9 @@ class RecipeAdmin(admin.ModelAdmin):
         'pub_date',
         'count_favorite',
     )
+    inlines = [
+        IngredientAmountInline,
+    ]
 
     empty_value_display = 'значение отсутствует'
     list_editable = ('author',)
