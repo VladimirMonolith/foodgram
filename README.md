@@ -1,5 +1,5 @@
 # Проект Foodgram - «Продуктовый помощник»
-![Build Status](https://github.com/VitaliySta/foodgram-project-react/actions/workflows/foodgram_workflow.yml/badge.svg)
+
 
 ### Описание:
 Сервис, который позволяет создавать/просматривать рецепты блюд, 
@@ -111,8 +111,8 @@ TELEGRAM_TOKEN=<токен вашего бота>
 
 - Проект будет доступен по вашему IP-адресу.
 
-#### REST API
-Подробная документация API будет доступна по адресу - http://<IP-адрес вашего сервера>/api/docs/
+
+
 
 #### Автор:
-Стацюк Виталий - [https://github.com/VitaliySta](https://github.com/VitaliySta)
+
