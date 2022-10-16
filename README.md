@@ -107,6 +107,7 @@ TELEGRAM_TOKEN=<токен вашего бота>
   * Загрузить подготовленный список ингредиентов
     ```bash
     sudo docker-compose exec backend python manage.py loaddata ingredients.json
+     sudo docker-compose exec backend python manage.py load_ingredients_data
     ```
 
 - Проект будет доступен по вашему IP-адресу.
