@@ -1,3 +1,4 @@
+from django.db import transaction
 from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
@@ -165,6 +166,7 @@ class RecipeSerializer(serializers.ModelSerializer):
             for ingredient in ingredients_data
         ])
 
+    @transaction.atomic
     def create(self, validated_data):
         author = self.context.get('request').user
         tags_data = validated_data.pop('tags')
@@ -174,6 +176,7 @@ class RecipeSerializer(serializers.ModelSerializer):
         self.add_ingredients(ingredients_data, recipe)
         return recipe
 
+    @transaction.atomic
     def update(self, instance, validated_data):
         recipe = instance
         instance.image = validated_data.get('image', instance.image)

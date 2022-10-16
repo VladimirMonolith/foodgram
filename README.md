@@ -1,119 +1,128 @@
-# Проект Foodgram - «Продуктовый помощник»
+# Foodgram
 
+![ci/cd_foodgram workflow](https://github.com/VladimirMonolith/foodgram-project-react/actions/workflows/foodgram_workflow.yml/badge.svg)
 
-### Описание:
-Сервис, который позволяет создавать/просматривать рецепты блюд, 
-подписываться на авторов, добавлять рецепты в избранное и в список покупок. 
-Список покупок выгружается в виде файла (shopping-list.txt), в котором сохранены все
-ингредиенты для рецептов из списка покупок.
+## Описание
 
-### Используемые технологии
-- Django
-- Django Rest Framework
+CI/CD API сервиса YaMDb.Workflow подразумевает автоматический запуск тестов, обновление образа проекта на DockerHub, автоматический деплой на боевой сервер и запуск сервиса, отправку уведомления о успешном завершении workflow в Телеграм при выполнении команды push.
+
+Проект YaMDb собирает отзывы пользователей на произведения.Произведения делятся на категории: "Категории", "Фильмы", "Музыка".Список категорий (Category) может быть расширен администратором (например, можно добавить категорию "Артхаус").
+
+### Сами произведения в YaMDb не хранятся, здесь нельзя посмотреть фильм или послушать музыку
+
+В каждой категории есть произведения: книги, фильмы или музыка. Например, в категории "Книги" могут быть произведения "Винни-Пух и все-все-все" и "Марсианские хроники", а в категории "Музыка" — песня "Давеча" группы "Насекомые" и вторая сюита Баха.Произведению может быть присвоен жанр из списка предустановленных (например, "Сказка", "Рок" или "Артхаус").Новые жанры может создавать только администратор.
+Благодарные или возмущённые пользователи оставляют к произведениям текстовые отзывы (Review) и ставят произведению оценку в диапазоне от одного до десяти (целое число); из пользовательских оценок формируется усреднённая оценка произведения — рейтинг (целое число). На одно произведение пользователь может оставить только один отзыв.
+
+#### Доступный функционал
+
+- Для аутентификации используются JWT-токены.
+- У неаутентифицированных пользователей доступ к API только на уровне чтения.
+- Создание объектов разрешено только аутентифицированным пользователям.На прочий фунционал наложено ограничение в виде административных ролей и авторства.
+- Управление пользователями.
+- Получение списка всех категорий и жанров, добавление и удаление.
+- Получение списка всех произведений, их добавление.Получение, обновление и удаление конкретного произведения.
+- Получение списка всех отзывов, их добавление.Получение, обновление и удаление конкретного отзыва.  
+- Получение списка всех комментариев, их добавление.Получение, обновление и удаление конкретного комментария.
+- Возможность получения подробной информации о себе и удаления своего аккаунта.
+- Фильтрация по полям.
+
+#### Документация к API доступна по адресу <http://158.160.11.40/redoc/> после запуска сервера с проектом
+
+#### Технологии
+
+- Python 3.7
+- Django 2.2.16
+- Django Rest Framework 3.12.4
+- Simple JWT
 - Docker
 - Docker-compose
+- PostgreSQL
 - Gunicorn
 - Nginx
-- PostgreSQL
+- GitHub Actions
+- Выделенный сервер Linux Ubuntu 22.04 с публичным ip
 
-### Workflow
-- **tests:** Проверка кода на соответствие PEP8.
-- **push Docker image to Docker Hub:** Сборка и публикация образа на DockerHub.
-- **deploy:** Автоматический деплой на боевой сервер при пуше в главную ветку main.
-- **send_massage:** Отправка уведомления в телеграм-чат.
+#### Запуск проекта в dev-режиме
 
-### Подготовка и запуск проекта
-У вас должен быть установлен Docker и вы должны быть зарегистрированы на [DockerHub](https://hub.docker.com/)
-- Клонировать проект с помощью git clone или скачать ZIP-архив.
-- Перейти в папку \foodgram-project-react\backend и выполнить команды:
-```bash
-sudo docker build -t <логин на DockerHub>/<название образа для бэкенда, какое хотите)> .
-sudo docker login
-sudo docker push <логин на DockerHub>/<название образа для бэкенда, которое написали> 
-```
-- Перейти в папку \foodgram-project-react\frontend и выполнить команды:
-```bash
-sudo docker build -t <логин на DockerHub>/<название образа для фронтэнда, какое хотите)> .
-sudo docker login
-sudo docker push <логин на DockerHub>/<название образа для фронтэнда, которое написали> 
-```
-- Изменить файл \foodgram-project-react\infra\deploy\docker-compose.yml:
-```
-backend:
-  image: <логин на DockerHub>/<название образа для бэкенда, которое написали>
-  
-frontend:
-  image: <логин на DockerHub>/<название образа для фронтэнда, которое написали>
-```
-- Изменить файл \foodgram-project-react\.github\workflows\foodgram_workflow.yml:
-```
-build_and_push_to_docker_hub:
-.......
-    tags: ${{ secrets.DOCKER_USERNAME }}/<название образа для бэкенда, которое написали>
-    
-deploy:
-.......
-    sudo docker pull ${{ secrets.DOCKER_USERNAME }}/<название образа для бэкенда, которое написали>
-```
+- Склонируйте репозиторий:  
+``` git clone <название репозитория> ```
+- Перейдите в директорию infra:  
+``` cd yamdb_final/infra/ ```  
+- Создайте файл .env по образцу:  
+``` cp .env.example .env ```  
 - Выполнить вход на удаленный сервер
-- Установить docker на сервер:
-```bash
-sudo apt install docker.io 
+- Установить docker:  
+``` sudo apt install docker.io ```
+- Установить docker-compose:
+
+``` bash
+    sudo apt-get update
+    sudo apt-get install docker-compose-plagin
+    sudo apt install docker-compose     
 ```
-- Установить docker-compose на сервер:
-```bash
-sudo apt-get update
-sudo apt install docker-compose
-```
-- Скопировать файл docker-compose.yml и nginx.conf из директории infra на сервер:
+
+или воспользоваться официальной [инструкцией](https://docs.docker.com/compose/install/)
+
+- Находясь локально в директории infra/, скопировать файлы docker-compose.yml и nginx.conf на удаленный сервер:
+
 ```bash
 scp docker-compose.yml <username>@<host>:/home/<username>/
-scp nginx.conf <username>@<host>:/home/<username>/
+scp -r nginx/ <username>@<host>:/home/<username>/
 ```
-- Для работы с Workflow добавить в Secrets GitHub переменные окружения:
-```
-DB_ENGINE=django.db.backends.postgresql
-DB_NAME=postgres
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=postgres
-DB_HOST=db
-DB_PORT=5432
 
-DOCKER_PASSWORD=<пароль DockerHub>
+- Для правильной работы workflow необходимо добавить в Secrets данного репозитория на GitHub переменные окружения:
+
+```bash
+Переменные PostgreSQL, ключ проекта Django и их значения по-умолчанию можно взять из файла .env.example, затем установить свои.
+
 DOCKER_USERNAME=<имя пользователя DockerHub>
+DOCKER_PASSWORD=<пароль от DockerHub>
 
-USER=<username для подключения к серверу>
-HOST=<IP сервера>
+USER=<username для подключения к удаленному серверу>
+HOST=<ip сервера>
 PASSPHRASE=<пароль для сервера, если он установлен>
-SSH_KEY=<ваш SSH ключ (для получения команда: cat ~/.ssh/id_rsa)>
+SSH_KEY=<ваш приватный SSH-ключ (для получения команда: cat ~/.ssh/id_rsa)>
 
-TELEGRAM_TO=<ID своего телеграм-аккаунта>
+TELEGRAM_TO=<id вашего Телеграм-аккаунта>
 TELEGRAM_TOKEN=<токен вашего бота>
 ```
-- После деплоя изменений в git, дождитесь выполнения всех Actions.
-- Зайдите на боевой сервер и выполните команды:
-  * Создаем и применяем миграции
-    ```bash
-    sudo docker-compose exec backend python manage.py migrate
-    ```
-  * Подгружаем статику
-    ```bash
-    sudo docker-compose exec backend python manage.py collectstatic --no-input 
-    ```
-  * Создать суперпользователя Django
-    ```bash
-    sudo docker-compose exec backend python manage.py createsuperuser
-    ```
-  * Загрузить подготовленный список ингредиентов
-    ```bash
-    sudo docker-compose exec backend python manage.py loaddata ingredients.json
-     sudo docker-compose exec backend python manage.py load_ingredients_data
-    ```
 
-- Проект будет доступен по вашему IP-адресу.
+#### Workflow проекта
 
+- **запускается при выполнении команды git push**
+- **tests:** проверка кода на соответствие PEP8, запуск pytest.
+- **build_and_push_to_docker_hub:** сборка и размещение образа проекта на DockerHub.
+- **deploy:** автоматический деплой на боевой сервер и запуск проекта.
+- **send_massage:** отправка уведомления пользователю в Телеграм.
 
+#### После успешного результата работы workflow зайдите на боевой сервер
 
+- Примените миграции:  
+``` sudo docker-compose exec web python manage.py migrate ```
+- Создайте суперпользователя:  
+``` sudo docker-compose exec web python manage.py createsuperuser ```
+- Загрузите тестовые данные:  
+``` sudo docker-compose exec web python manage.py loaddata fixtures.json ```
 
-#### Автор:
+#### Примеры некоторых запросов API
 
+Регистрация пользователя:  
+``` POST /api/v1/auth/signup/ ```  
+Получение данных своей учетной записи:  
+``` GET /api/v1/users/me/ ```  
+Добавление новой категории:  
+``` POST /api/v1/categories/ ```  
+Удаление жанра:  
+``` DELETE /api/v1/genres/{slug} ```  
+Частичное обновление информации о произведении:  
+``` PATCH /api/v1/titles/{titles_id} ```  
+Получение списка всех отзывов:  
+``` GET /api/v1/titles/{title_id}/reviews/ ```  
+Добавление комментария к отзыву:  
+``` POST /api/v1/titles/{title_id}/reviews/{review_id}/comments/ ```  
+
+#### Полный список запросов API находятся в документации
+
+#### Автор
+
+Гут Владимир - [https://github.com/VladimirMonolith](http://github.com/VladimirMonolith)
