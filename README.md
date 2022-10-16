@@ -1,63 +1,140 @@
-# Foodgram
+# Cервис Foodgram, "Продуктовый помощник"
 
 ![ci/cd_foodgram workflow](https://github.com/VladimirMonolith/foodgram-project-react/actions/workflows/foodgram_workflow.yml/badge.svg)
 
+[![Python](https://img.shields.io/badge/-Python-464646?style=flat-square&logo=Python)](https://www.python.org/)
+[![Django](https://img.shields.io/badge/-Django-464646?style=flat-square&logo=Django)](https://www.djangoproject.com/)
+[![Django REST Framework](https://img.shields.io/badge/-Django%20REST%20Framework-464646?style=flat-square&logo=Django%20REST%20Framework)](https://www.django-rest-framework.org/)
+[![PostgreSQL](https://img.shields.io/badge/-PostgreSQL-464646?style=flat-square&logo=PostgreSQL)](https://www.postgresql.org/)
+[![Nginx](https://img.shields.io/badge/-NGINX-464646?style=flat-square&logo=NGINX)](https://nginx.org/ru/)
+[![gunicorn](https://img.shields.io/badge/-gunicorn-464646?style=flat-square&logo=gunicorn)](https://gunicorn.org/)
+[![docker](https://img.shields.io/badge/-Docker-464646?style=flat-square&logo=docker)](https://www.docker.com/)
+[![GitHub%20Actions](https://img.shields.io/badge/-GitHub%20Actions-464646?style=flat-square&logo=GitHub%20actions)](https://github.com/features/actions)
+[![Yandex.Cloud](https://img.shields.io/badge/-Yandex.Cloud-464646?style=flat-square&logo=Yandex.Cloud)](https://cloud.yandex.ru/)
+
 ## Описание
 
-11CI/CD API сервиса YaMDb.Workflow подразумевает автоматический запуск тестов, обновление образа проекта на DockerHub, автоматический деплой на боевой сервер и запуск сервиса, отправку уведомления о успешном завершении workflow в Телеграм при выполнении команды push.
+Онлайн-сервис Foodgram и API для него.Имеется реализация CI/CD проекта.На этом сервисе пользователи могут публиковать рецепты, подписываться на публикации других пользователей, добавлять понравившиеся рецепты в список "Избранное", а перед походом в магазин скачивать сводный список продуктов, необходимых для приготовления одного или нескольких выбранных блюд.
 
-Проект YaMDb собирает отзывы пользователей на произведения.Произведения делятся на категории: "Категории", "Фильмы", "Музыка".Список категорий (Category) может быть расширен администратором (например, можно добавить категорию "Артхаус").
+### Доступный функционал
 
-### Сами произведения в YaMDb не хранятся, здесь нельзя посмотреть фильм или послушать музыку
-
-В каждой категории есть произведения: книги, фильмы или музыка. Например, в категории "Книги" могут быть произведения "Винни-Пух и все-все-все" и "Марсианские хроники", а в категории "Музыка" — песня "Давеча" группы "Насекомые" и вторая сюита Баха.Произведению может быть присвоен жанр из списка предустановленных (например, "Сказка", "Рок" или "Артхаус").Новые жанры может создавать только администратор.
-Благодарные или возмущённые пользователи оставляют к произведениям текстовые отзывы (Review) и ставят произведению оценку в диапазоне от одного до десяти (целое число); из пользовательских оценок формируется усреднённая оценка произведения — рейтинг (целое число). На одно произведение пользователь может оставить только один отзыв.
-
-#### Доступный функционал
-
-- Для аутентификации используются JWT-токены.
+- Аутентификация реализована с помощью стандартного модуля DRF - Authtoken.
 - У неаутентифицированных пользователей доступ к API только на уровне чтения.
 - Создание объектов разрешено только аутентифицированным пользователям.На прочий фунционал наложено ограничение в виде административных ролей и авторства.
 - Управление пользователями.
-- Получение списка всех категорий и жанров, добавление и удаление.
-- Получение списка всех произведений, их добавление.Получение, обновление и удаление конкретного произведения.
-- Получение списка всех отзывов, их добавление.Получение, обновление и удаление конкретного отзыва.  
-- Получение списка всех комментариев, их добавление.Получение, обновление и удаление конкретного комментария.
-- Возможность получения подробной информации о себе и удаления своего аккаунта.
+- Возможность получения подробной информации о себе и ее редактирование.
+- Возможность подписаться на других пользователей и отписаться от них.
+- Получение списка всех тегов и ингредиентов.
+- Получение списка всех рецептов, их добавление.Получение, обновление и удаление конкретного рецепта.
+- Возможность добавить рецепт в избранное.
+- Возможность добавить рецепт в список покупок.
+- Возможность скачать список покупок в PDF формате.
 - Фильтрация по полям.
 
-#### Документация к API доступна по адресу <http://158.160.11.40/redoc/> после запуска сервера с проектом
+#### Документация к API доступна по адресу <http://localhost/api/docs/> после локального запуска проекта
 
-#### Технологии
+#### Технологи
 
 - Python 3.7
-- Django 2.2.16
+- Django 3.2.15
 - Django Rest Framework 3.12.4
-- Simple JWT
+- Authtoken
 - Docker
 - Docker-compose
 - PostgreSQL
 - Gunicorn
 - Nginx
 - GitHub Actions
-- Выделенный сервер Linux Ubuntu 22.04 с публичным ip
+- Выделенный сервер Linux Ubuntu 22.04 с публичным IP
 
-#### Запуск проекта в dev-режиме
+#### Локальный запуск проекта
 
-- Склонируйте репозиторий:  
-``` git clone <название репозитория> ```
-- Перейдите в директорию infra:  
-``` cd yamdb_final/infra/ ```  
-- Создайте файл .env по образцу:  
-``` cp .env.example .env ```  
+- Склонировать репозиторий:
+
+```bash
+   git clone <название репозитория>
+```
+
+```bash
+   cd <название репозитория> 
+```
+
+Cоздать и активировать виртуальное окружение:
+
+Команда для установки виртуального окружения на Mac или Linux:
+
+```bash
+   python3 -m venv env
+   source env/bin/activate
+```
+
+Команда для Windows:
+
+```bash
+   python -m venv venv
+   source venv/Scripts/activate
+```
+
+- Перейти в директорию infra:
+
+```bash
+   cd infra
+```
+
+- Создать файл .env по образцу:
+
+```bash
+   cp .env.example .env
+```
+
+- Выполнить команду для доступа к документации:
+
+```bash
+   docker-compose up 
+```
+
+Установить зависимости из файла requirements.txt:
+
+```bash
+   cd ..
+   cd backend
+   pip install -r requirements.txt
+```
+
+```bash
+   python manage.py migrate
+```
+
+Заполнить базу тестовыми данными об ингредиентах:
+
+```bash
+   python manage.py load_ingredients_data
+```
+
+Создать суперпользователя, если необходимо:
+
+```bash
+python manage.py createsuperuser
+```
+
+- Запустить локальный сервер:
+
+```bash
+   python manage.py runserver
+```
+
+#### Установка на удалённом сервере
+
 - Выполнить вход на удаленный сервер
-- Установить docker:  
-``` sudo apt install docker.io ```
+- Установить docker:
+
+```bash
+   sudo apt install docker.io
+   ```
+
 - Установить docker-compose:
 
 ``` bash
-    sudo apt-get update
-    sudo apt-get install docker-compose-plagin
     sudo apt install docker-compose     
 ```
 
@@ -67,7 +144,7 @@
 
 ```bash
 scp docker-compose.yml <username>@<host>:/home/<username>/
-scp -r nginx/ <username>@<host>:/home/<username>/
+scp nginx.conf <username>@<host>:/home/<username>/
 ```
 
 - Для правильной работы workflow необходимо добавить в Secrets данного репозитория на GitHub переменные окружения:
@@ -90,36 +167,89 @@ TELEGRAM_TOKEN=<токен вашего бота>
 #### Workflow проекта
 
 - **запускается при выполнении команды git push**
-- **tests:** проверка кода на соответствие PEP8, запуск pytest.
+- **tests:** проверка кода на соответствие PEP8.
 - **build_and_push_to_docker_hub:** сборка и размещение образа проекта на DockerHub.
 - **deploy:** автоматический деплой на боевой сервер и запуск проекта.
 - **send_massage:** отправка уведомления пользователю в Телеграм.
 
 #### После успешного результата работы workflow зайдите на боевой сервер
 
-- Примените миграции:  
-``` sudo docker-compose exec web python manage.py migrate ```
-- Создайте суперпользователя:  
-``` sudo docker-compose exec web python manage.py createsuperuser ```
-- Загрузите тестовые данные:  
-``` sudo docker-compose exec web python manage.py loaddata fixtures.json ```
+- Примените миграции:
+
+```bash
+   sudo docker-compose exec backend python manage.py migrate
+```
+
+- Подгружаем статику:
+
+```bash
+   sudo docker-compose exec backend python manage.py collectstatic --no-input
+```
+
+- Заполните базу тестовыми данными об ингредиентах:
+
+```bash
+   sudo docker-compose exec backend python manage.py load_ingredients_data
+```
+
+- Создайте суперпользователя:
+
+```bash
+   sudo docker-compose exec backend python manage.py createsuperuser
+```
 
 #### Примеры некоторых запросов API
 
-Регистрация пользователя:  
-``` POST /api/v1/auth/signup/ ```  
-Получение данных своей учетной записи:  
-``` GET /api/v1/users/me/ ```  
-Добавление новой категории:  
-``` POST /api/v1/categories/ ```  
-Удаление жанра:  
-``` DELETE /api/v1/genres/{slug} ```  
-Частичное обновление информации о произведении:  
-``` PATCH /api/v1/titles/{titles_id} ```  
-Получение списка всех отзывов:  
-``` GET /api/v1/titles/{title_id}/reviews/ ```  
-Добавление комментария к отзыву:  
-``` POST /api/v1/titles/{title_id}/reviews/{review_id}/comments/ ```  
+Регистрация пользователя:
+
+```bash
+   POST /api/v1/users/
+```
+
+Получение данных своей учетной записи:
+
+```bash
+   GET /api/v1/users/me/ 
+```
+
+Добавление подписки:
+
+```bash
+   POST /api/v1/users/id/subscribe/
+```
+
+Обновление рецепта:
+  
+```bash
+   PATCH /api/v1/recipes/id/
+```
+
+Удаление рецепта из избранного:
+
+```bash
+   DELETE /api/v1/recipes/id/favorite/
+```
+
+Получение списка ингредиентов:
+
+```bash
+   GET /api/v1/ingredients/
+```
+
+Скачать список покупок:
+
+```bash
+   GET /api/v1/recipes/download_shopping_cart/
+```
+
+Проект доступен по адресу: <http://foodgram-diplom.myddns.me/>
+
+Доступ в админку:
+
+```bash
+   email - ad@min.com
+   пароль - sh7811vu
+```
 
 #### Полный список запросов API находятся в документации
 
