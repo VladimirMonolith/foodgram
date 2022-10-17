@@ -25,7 +25,7 @@ from ..serializers.recipes import (
     ShoppingCartSerializer,
     TagSerializer
 )
-from ..utils import create_shopping_list
+from ..utils import create_shopping_cart
 
 
 class TagViewSet(viewsets.ReadOnlyModelViewSet):
@@ -132,7 +132,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
                 'ingredient__name'
             ).annotate(ingredient_value=Sum('amount'))
         )
-        return create_shopping_list(ingredients_cart)
+        return create_shopping_cart(ingredients_cart)
 
     def get_serializer_class(self):
         """Определяет какой сериализатор будет использоваться
