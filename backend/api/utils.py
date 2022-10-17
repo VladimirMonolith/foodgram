@@ -35,6 +35,7 @@
 #     return FileResponse(
 #         buffer, as_attachment=True, filename='shopping_list.pdf'
 #     )
+# reportlab.rl_config.TTFSearchPath.append(str(settings.BASE_DIR) + 'fonts')
 
 import io
 
@@ -47,7 +48,6 @@ from reportlab.pdfgen import canvas
 def create_shopping_list(ingredients_cart):
     """Функция для формирования списка покупок."""
     font = 'TNR'
-    # reportlab.rl_config.TTFSearchPath.append(str(settings.BASE_DIR) + 'fonts')
     pdfmetrics.registerFont(TTFont('TNR', 'data/times.ttf', 'UTF-8'))
     buffer = io.BytesIO()
     pdf_file = canvas.Canvas(buffer)
