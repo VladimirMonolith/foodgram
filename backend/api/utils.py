@@ -42,12 +42,15 @@ from django.http import HttpResponse
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
+import reportlab
+from django.conf import settings
 
 
 def create_shopping_list(ingredients_cart):
     """Функция для формирования списка покупок."""
     font = 'TNR'
-    pdfmetrics.registerFont(TTFont('TNR', 'times.ttf', 'UTF-8'))
+    # reportlab.rl_config.TTFSearchPath.append(str(settings.BASE_DIR) + 'fonts')
+    pdfmetrics.registerFont(TTFont('TNR', 'data/times.ttf', 'UTF-8'))
     buffer = io.BytesIO()
     pdf_file = canvas.Canvas(buffer)
     pdf_file.setFont(font, 24)
