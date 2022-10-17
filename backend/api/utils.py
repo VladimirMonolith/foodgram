@@ -52,7 +52,7 @@ def create_shopping_list(ingredients_cart):
         'attachment; filename="shopping_cart.pdf"'
     )
     pdfmetrics.registerFont(
-        TTFont('TNR', 'data/Times-New-Romance.ttf', 'UTF-8')
+        TTFont('TNR', 'data/times.ttf', 'UTF-8')
     )
     buffer = io.BytesIO()
     pdf_file = canvas.Canvas(buffer)
