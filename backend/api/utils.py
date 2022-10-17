@@ -49,10 +49,10 @@ def create_shopping_list(ingredients_cart):
     """Функция для формирования списка покупок."""
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = (
-        'attachment; filename="shopping_cart.pdf"'
+        "attachment; filename='shopping_cart.pdf'"
     )
     pdfmetrics.registerFont(
-        TTFont('TNR', 'data/times.ttf', 'UTF-8')
+        TTFont('TNR', 'data/arial.ttf', 'UTF-8')
     )
     buffer = io.BytesIO()
     pdf_file = canvas.Canvas(buffer)
