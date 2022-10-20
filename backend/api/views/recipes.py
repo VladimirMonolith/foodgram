@@ -121,7 +121,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
         permission_classes=(permissions.IsAuthenticated,)
     )
     def download_shopping_cart(self, request):
-        """Позволяет текущему пользователю закрузить список покупок."""
+        """Позволяет текущему пользователю загрузить список покупок."""
         ingredients_cart = (
             IngredientAmount.objects.filter(
                 recipe__shopping_cart__user=request.user
