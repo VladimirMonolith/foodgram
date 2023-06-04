@@ -1,4 +1,4 @@
-# Cервис Foodgram, "Продуктовый помощник" 
+# Cервис Foodgram, "Продуктовый помощник"
 
 ![ci/cd_foodgram workflow](https://github.com/VladimirMonolith/foodgram-project-react/actions/workflows/foodgram_workflow.yml/badge.svg)
 
